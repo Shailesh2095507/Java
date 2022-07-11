@@ -1,0 +1,1571 @@
+
+---------------------------------------------------------------------------------------------------------------------------------
+First---> (1st Exe)
+---------------------------------------------------------------------------------------------------------------------------------
+public class Instructor {
+    public long id;
+	public String name;
+	public String title;
+	public String department;
+	public Book[] books;
+	
+	public Instructor(long id, String name, String title, String department, Book[] books) {
+		this( id,  name,  title, department);
+		this.books=books;
+	}
+	
+	public Instructor(long id, String name, String title, String department) {
+		this( id,  name,  title);
+		this.department=department;
+	}
+	
+	public Instructor(long id, String name, String title) {
+		this( id,  name);
+		this.title=title;
+	}
+	
+	public Instructor(long id, String name) {
+		this.id=id;
+		this.name=name;
+	}
+	
+	public String getMostRecentBookTitle() {
+	    return  books[books.length-1].getTitle();
+	}
+	
+	public Book updateBook(int index, String title) {
+	     Book oldbook=new Book(books[index].getTitle());
+	     books[index].setTitle(title);
+	     return oldbook;
+	}
+	
+	public Book updateBook(int index, Book book) {
+		Book oldbook=books[index];
+		books[index]=book;
+		return oldbook;
+		
+	}
+	
+	public static void main(String[] args) {
+		Book book1 = new Book("Java for Beginners");
+        Book book2 = new Book("Scala for Beginners");
+        Book book3 = new Book("Effective Python");
+		
+		Instructor instructor = new Instructor(101, "John", "Assistant Professor", "Computer Science", new Book[]{book1, book2, book3});
+		System.out.println(instructor.getMostRecentBookTitle());
+		System.out.println("old book title: " + instructor.updateBook(1, "Effective C#").getTitle());
+				
+		Book book4 = new Book("Introduction to Data Mining");
+		System.out.println("old book title: " + instructor.updateBook(1, book4).getTitle());
+	}
+}
+
+
+public class Book {
+	public String title;
+	
+	public Book(String title) {
+		this.title = title;
+	}
+
+    // your code (optional ~ you can avoid it. Depends on your implementation in Instructor)
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Second---->(2nd Exe)
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+import java.time.LocalDate;
+
+public class CarPriceEstimator {
+	
+	public double getSalePrice(String makeAndModel, int yearManufactured, double milesDriven, 
+			int airBagsCount, boolean hasAbs, boolean hasEbd,
+			boolean hasRearViewCamera, boolean hasSunRoof, boolean hasAutoAC,
+			boolean hasAccidentHistory) {
+		
+		double salePrice = getPrice(makeAndModel, yearManufactured);
+		int currentYear = LocalDate.now().getYear();		
+		int ageOfCar = currentYear - yearManufactured + 1;
+		System.out.println("ageOfCar: " +  ageOfCar);
+		
+			
+		// 1. Compute based on yearly depreciation value:
+		if(ageOfCar<=10)
+		{
+		    salePrice= salePrice-(ageOfCar*(0.05*salePrice));
+		}
+		else
+		{
+		    salePrice=salePrice * 0.1;
+		    
+		}
+		
+		
+		//       if age of car is less than or equal to 10 then
+		//               price depreciates by 5% of original sale price every year
+		//               e.g., if original price is 10000, then for 3 year old car
+		//                     price depreciated would be 1500, i.e., sale price would be 8500
+		//       else 
+		//               return salePrice * 0.1 (i.e., 10% of current salePrice)
+		// Note: Use compound arithmetic assignment operators
+		
+		
+		System.out.println("salePrice after depreciation: " + salePrice);
+		
+		
+		// 2. Security Features
+		//      if car does NOT have atleast two airbags AND abs AND ebd
+		//              then reduce price by $1000
+		if(!(airBagsCount>=2 &&  hasEbd==true && hasAbs==true))
+		salePrice-=1000;
+		
+		
+		System.out.println("salePrice after accounting for security features: " + salePrice);
+		
+		// 3. Comfort Features
+		// if car has rear-view camera AND either sunroof OR auto AC then
+		//    increment price by $500
+	     if(hasRearViewCamera==true && (hasSunRoof==true || hasAutoAC==true) )
+	     salePrice+=500;
+		
+		System.out.println("salePrice after accounting for comfort features: " + salePrice);
+		
+		// 4. Past accidents
+		// if car was involved in an accident then
+		//     reduce price by $500
+		if(hasAccidentHistory==true)
+		salePrice-=500;
+		
+		
+		System.out.println("salePrice after accounting for past accidents: " + salePrice);
+		
+		// 5. Based on additional miles driven
+		double expectedMilesDriven = ageOfCar * 10000.0;
+		double additionalMiles = milesDriven - expectedMilesDriven;
+		
+		// a) if # miles over-driven is greater than 1000 AND less than or equal to 10000 then
+		//        reduce sale price by 500
+		if(additionalMiles>1000 && additionalMiles<=10000)
+		salePrice-=500;
+		
+		
+		
+		
+		// b) if # miles over-driven is greater than 10000 AND less than or equal to 30000 then
+		//        reduce sale price by 1000
+		else if(additionalMiles>10000 && additionalMiles<=30000)
+		salePrice-=1000;
+		
+		
+		
+		
+		// c) if # miles over-driven is greater than 30000 then
+		//        reduce sale price by 1500
+		else if(additionalMiles>30000)
+		salePrice-=1500;
+		
+		
+		
+		
+		System.out.println("salePrice after accounting for miles driven: " + salePrice);
+		
+		return salePrice;
+	}
+	
+	private double getPrice(String makeAndModel, int yearManufactured) {
+		if (makeAndModel.equalsIgnoreCase("ford ecosport")) {
+			return 20000.0;
+		} else if (makeAndModel.equalsIgnoreCase("honda city")) {
+			return 25000.0;
+		} else if (makeAndModel.equalsIgnoreCase("toyota camry hybrid")) {
+			return 30000.0;
+		}
+		return 20000.0;
+	}
+
+	public static void main(String[] args) {
+		CarPriceEstimator carPriceEstimator = new CarPriceEstimator();
+		double salesPrice = carPriceEstimator.getSalePrice("ford ecosport", 2018, 60000.0, 2, true, false, true, false, false, true);		
+	}
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Third----> (3rd Exe)
+----------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.*;
+public class StudentUtil {
+
+    public static double[] calculateGPA(int[] studentIdList, char[][] studentsGrades) {
+        double studentsGpa[]=new double[studentIdList.length];
+        double sum=0;
+        for(int i=0;i<studentIdList.length;i++)
+        {
+            
+            for(int j=0;j<studentsGrades[i].length;j++)
+            {
+                
+                if(studentsGrades[i][j]=='A')
+                sum+=4;
+                if(studentsGrades[i][j]=='B')
+                sum+=3;
+                if(studentsGrades[i][j]=='C')
+                sum+=2;
+            }
+            studentsGpa[i]=(double) (sum/studentsGrades[i].length);
+            sum=0;
+            
+                
+            }
+             return studentsGpa;
+            
+        }
+       
+    
+    
+    public static int[] getStudentsByGPA(double lower, double higher, int[] studentIdList, char[][] studentsGrades) {
+        // perform parameter validation. Return null if passed parameters are not valid
+        
+        List<Integer> arr=new  ArrayList<Integer>();
+        
+        double gpa[]=calculateGPA(studentIdList,studentsGrades);
+        if(lower>higher|| lower<0 || higher <0)
+          return null;
+          int count=0;
+        for(int i=0;i<gpa.length;i++)
+        {
+           if(lower<=gpa[i] && higher>=gpa[i])
+          {
+             count++;
+          }
+        }
+        int result[]=new int[count];
+        int index=0;
+        for(int i=0;i<gpa.length;i++)
+        {
+            if(lower<=gpa[i] && higher>=gpa[i])
+           {
+             result[index++]=studentIdList[i];
+           }
+        }
+        return result;
+        
+        
+        // construct the result array and return it. You would need an extra for loop to compute the size of the resulting array
+        
+    }
+    
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Fourth---> (4th Exe)
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+import java.util.Arrays;
+
+public class SentimentAnalyzer {
+  // Tip: labeled continue can be used + convert review to lower-case
+  public static int[] detectProsAndCons(String review,
+    String[][] featureSet, String[] posOpinionWords, String[] negOpinionWords) {
+    int[] featureOpinions = new int[featureSet.length];
+    review = review.toLowerCase();
+    nextFeature: for (int i = 0; i < featureSet.length; i++) {
+      String[] features = featureSet[i];
+      for (String feature: features) {
+        if (review.contains(feature)) {
+          int opinion = getOpinionOnFeature(review, feature, posOpinionWords, negOpinionWords);
+          if (opinion != 0) {
+            // Opinion found. Record opinion and move onto next feature
+            featureOpinions[i] = opinion;
+            continue nextFeature;
+          }
+        }
+      }
+    }
+    return featureOpinions;
+  }
+
+  // First invoke checkForWasPhrasePattern and
+  // if it cannot find an opinion only then invoke checkForOpinionFirstPattern
+  private static int getOpinionOnFeature(String review, String feature, String[] posOpinionWords, String[] negOpinionWords) {
+    int opinion = checkForWasPhrasePattern(review, feature, posOpinionWords, negOpinionWords);
+
+    if (opinion == 0) {
+      opinion = checkForOpinionFirstPattern(review, feature, posOpinionWords, negOpinionWords);
+    }
+    return opinion;
+  }
+
+  private static int checkForWasPhrasePattern(String review,
+    String feature, String[] posOpinionWords, String[] negOpinionWords) {
+    int opinion = 0;
+    String pattern = feature + " was ";
+    // searching for positive words
+    for (String str: posOpinionWords) {
+      String newPat = pattern.concat(str);
+      if (review.contains(newPat)) {
+        opinion++;
+        break;
+      }
+    }
+
+    //no positive words found, so search negative
+    if (opinion == 0) {
+      for (String str: negOpinionWords) {
+        if (review.contains(pattern.concat(str))) {
+          opinion--;
+          break;
+        }
+      }
+    }
+    return opinion;
+  }
+
+  // Tip: Look at String API doc. Methods like indexOf, length, substring(beginIndex), startsWith can come into play
+  // Return 1 if positive opinion found, -1 for negative opinion, 0 for no opinion
+  // You can first look for positive opinion. If not found, only then you can look for negative opinion
+  /*private static int checkForWasPhrasePattern(String review,
+  String feature, String[] posOpinionWords, String[] negOpinionWords)
+  {
+  int opinion = 0;
+  String pattern = feature + " was ";
+  int index = review.indexOf(pattern);
+  // while loop is used instead of if-statement to account for appearance
+  // of pattern in more than one location. See last statement of while loop
+  while (index >= 0)
+  {
+  String patternSuffix = review.substring(index + pattern.length());
+  // String patternPrefix = sentence.substring(0, index);
+  for (String opinionWord : posOpinionWords)
+  {
+  if (patternSuffix.startsWith(opinionWord))
+  {
+  return 1;
+  }
+  }
+  for (String opinionWord : negOpinionWords)
+  {
+  if (patternSuffix.startsWith(opinionWord)) {
+  return -1;
+  }
+  }
+
+
+
+
+
+  //String remainingReview = review.substring(review.indexOf(pattern) + pattern.length()-1);
+  //index = remainingReview.indexOf(pattern);
+
+
+
+
+
+  index = patternSuffix.indexOf(pattern);
+  review = patternSuffix;
+  }
+  return opinion; // no opinion found
+  } */
+
+  private static int checkForOpinionFirstPattern(String review, String feature, String[] posOpinionWords, String[] negOpinionWords) {
+    // Extract sentences as feature might appear multiple times.
+    // split() takes a regular expression and "." is a special character
+    // for regular expression. So, escape it to make it work!!
+    String[] sentences = review.split("\\.");
+
+    for (String sentence: sentences) {
+      int index = sentence.indexOf(feature);
+
+      if (index > 0) {
+        String patternPrefix = sentence.substring(0, index).trim();
+
+        for (String opinionWord: posOpinionWords) {
+          if (patternPrefix.endsWith(opinionWord)) {
+            return 1;
+          }
+        }
+
+        for (String opinionWord: negOpinionWords) {
+          if (patternPrefix.endsWith(opinionWord)) {
+            return -1;
+          }
+        }
+      }
+    }
+
+    return 0; // no opinion found
+  }
+
+  public static void main(String[] args) {
+    /*String review = "I chose two items from the new menu, the shrimp" +
+    " scampi and the shrimp and chicken carbonara, both
+    with my favourite" +
+    " soup and some warm breadsticks. The soup was
+    amazing, as always.";
+    */
+
+    String review = "Not only was their food delicious, but I must say that the stars are more for the excellent service!";
+
+    //String review = "Haven't been here in years! Fantastic service and the food was delicious! Definetly will be a frequent flyer! Francisco was very attentive";
+
+    //String review = "Sorry OG, but you just lost some loyal customers. Horrible service, no smile or greeting just attitude. The breadsticks were stale and burnt, appetizer was cold and the food came out before the salad.";
+
+    String[][] featureSet = {
+      {
+        "ambiance",
+        "ambience",
+        "atmosphere",
+        "decor"
+      },
+      {
+        "dessert",
+        "ice cream",
+        "desert"
+      },
+      {
+        "food"
+      },
+      {
+        "soup"
+      },
+      {
+        "service",
+        "management",
+        "waiter",
+        "waitress",
+        "bartender",
+        "staff",
+        "server"
+      }
+    };
+    String[] posOpinionWords = {
+      "good",
+      "fantastic",
+      "friendly",
+      "great",
+      "excellent",
+      "amazing",
+      "awesome",
+      "delicious"
+    };
+    String[] negOpinionWords = {
+      "slow",
+      "bad",
+      "horrible",
+      "awful",
+      "unprofessional",
+      "poor"
+    };
+    int[] featureOpinions = detectProsAndCons(review, featureSet, posOpinionWords, negOpinionWords);
+    System.out.println("Opinions on Features: " + Arrays.toString(featureOpinions));
+  }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+5th--->
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+public class APIResponseParser {
+    
+     /**
+	 * Parses the input text and returns a Book instance containing
+	 * the parsed data. 
+	 * @param response text to be parsed
+	 * @return Book instance containing parsed data
+	 */
+     public static Book parse(String response) {
+        Book book = new Book();
+		String endRule = "</title>";
+		
+		String startRule = "<title>";		
+		String title = parse(response, startRule, endRule); 
+	    book.setTitle(title);
+	    endRule="</name>";
+	    startRule="<name>";
+	    String author=parse(response, startRule, endRule); 
+	    book.setAuthor(author);
+	    endRule="</original_publication_year>";
+	    startRule="<original_publication_year type=\"integer\">";
+	    int publicationYear=Integer.parseInt(parse(response, startRule, endRule));
+	    book.setPublicationYear(publicationYear);
+	    endRule="</ratings_count>";
+	    startRule="<ratings_count type=\"integer\">";
+	    int ratingsCount=Integer.parseInt(parse(response, startRule, endRule).replace(",",""));
+	    book.setRatingsCount(ratingsCount);
+	    endRule="</average_rating>";
+	    startRule="<average_rating>";
+	    Double averageRating=Double.parseDouble(parse(response, startRule, endRule));
+	    book.setAverageRating(averageRating);
+	    endRule="</image_url>";
+	    startRule="<image_url>";
+	    String imageUrl=parse(response, startRule, endRule);
+	    book.setImageUrl(imageUrl);
+	    
+	    
+		
+		// Your code
+		return book;
+     }
+     
+     // write overloaded parse method with the 3 parameters response, startRule, endRule
+     private  static String  parse(String response,String startRule,String endRule)
+     {
+         String result="";
+         if(response.contains(startRule))
+         {
+             int startIndex=response.indexOf(startRule)+startRule.length();
+             int endIndex=response.indexOf(endRule);
+             System.out.println("title: " + response.substring(startIndex, endIndex));
+             result=response.substring(startIndex,endIndex);
+         }
+         return result;
+        
+     }
+     
+     public static void main(String[] args) {
+		String response = "<work>" + 
+	                            "<id type=\"integer\">2361393</id>" +
+	                            "<books_count type=\"integer\">813</books_count>" +
+	                            "<ratings_count type=\"integer\">1,16,315</ratings_count>" + 
+	                            "<text_reviews_count type=\"integer\">3439</text_reviews_count>" +
+	                            "<original_publication_year type=\"integer\">1854</original_publication_year>" +
+								"<original_publication_month type=\"integer\" nil=\"true\"/>" +
+								"<original_publication_day type=\"integer\" nil=\"true\"/>" +
+								"<average_rating>3.79</average_rating>" +
+								"<best_book type=\"Book\">" +
+									"<id type=\"integer\">16902</id>" +
+									"<title>Walden</title>" + 
+									"<author>" +
+										"<id type=\"integer\">10264</id>" + 
+										"<name>Henry David Thoreau</name>" + 
+									"</author>" +
+									"<image_url>" + 
+										"http://images.gr-assets.com/books/1465675526m/16902.jpg" +
+									"</image_url>" +
+									"<small_image_url>" + 
+										"http://images.gr-assets.com/books/1465675526s/16902.jpg" +
+									"</small_image_url>" +
+								"</best_book>" +
+							"</work>";
+		
+		APIResponseParser.parse(response);
+	}
+}
+
+
+public class Book {		
+        private String title;
+		private String author;
+		private int publicationYear;
+		private double averageRating;
+		private int ratingsCount;
+		private String imageUrl;
+		
+		// Add getters & setters for author, averageRating, and ratingsCount
+		
+		public String getTitle() {
+			return title;
+		}
+		public void setTitle(String title) {
+			this.title = title;
+		}
+		
+		public int getPublicationYear() {
+			return publicationYear;
+		}
+		public void setPublicationYear(int publicationYear) {
+			this.publicationYear = publicationYear;
+		}
+		
+		public String getImageUrl() {
+			return imageUrl;
+		}
+		public void setImageUrl(String imageUrl) {
+			this.imageUrl = imageUrl;
+		}
+		public int getRatingsCount()
+		{
+		    return ratingsCount;
+		}
+		public void setRatingsCount(int ratingsCount)
+		{
+		    this.ratingsCount=ratingsCount;
+		}
+		public double getAverageRating()
+		{
+		    return averageRating;
+		}
+		public void setAverageRating(double averageRating)
+		{
+		    this.averageRating=averageRating;
+		}
+		public String getAuthor()
+		{
+		    return author;
+		}
+		public void setAuthor(String author)
+		{
+		    this.author=author;
+		}
+		
+	}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+6TH--->
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+public class User {
+    
+	private long id;
+	// add rest of the variables
+	private String firstName;
+	private String lastName;
+	private String gender;
+	private String email;
+	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getFirstName()
+	{
+	    return firstName;
+	}
+	public void setFirstName(String firstName)
+	{
+	    this.firstName=firstName;
+	}
+	public String getLastName()
+	{
+	    return lastName;
+	}
+	public void setLastName(String lastName)
+	{
+	    this.lastName=lastName;
+	}
+	public String getGender()
+	{
+	    return gender;
+	}
+	public void setGender(String gender)
+	{
+	    this.gender=gender;
+	}
+	public String getEmail()
+	{
+	    return email;
+	}
+	public void setEmail(String email)
+	{
+	    this.email=email;
+	}
+	
+	// add rest of the getters & setters
+	
+}
+public class Patient extends User
+{
+    private long patientId;
+    private boolean insured;
+    public long getPatientId()
+    {
+        return patientId;
+        
+    }
+    public void setPatientId(long patientId)
+    {
+        this.patientId=patientId;
+    }
+    public boolean getInsured()
+    {
+        return insured;
+    }
+    public void isInsured(boolean insured)
+    {
+        this.insured=insured;
+    }
+}
+public class Staff extends User
+{
+    private long staffId;
+    private int yearsOfExperience;
+    private String description;
+    private double salary;
+    public long getStaffId()
+    {
+        return staffId;
+    }
+    public void setStaffId(long staffId)
+    {
+        this.staffId=staffId;
+    }
+    public int  getYearsOfExperience()
+    {
+        return yearsOfExperience;
+    }
+    public void setYearsOfExperience(int  yearsOfExperience)
+    {
+        this.yearsOfExperience=yearsOfExperience;
+    }
+    public String  getDescription()
+    {
+        return description;
+    }
+    public void setDescription(String description)
+    {
+        this.description=description;
+    }
+    public double getSalary()
+    {
+        return salary;
+    }
+    public void setSalary(double salary)
+    {
+        this.salary=salary;
+    }
+    
+}
+public class Doctor  extends Staff
+{
+    private long doctorId;
+    private String specialization;
+    public long getDoctorId()
+    {
+        return doctorId;
+    }
+    public void setDoctorId(long doctorId)
+    {
+        this.doctorId=doctorId;
+    }
+     public String getSpecialization()
+    {
+        return specialization;
+    }
+    public void setSpecialization(String specialization)
+    {
+        this.specialization=specialization;
+    }
+    
+    
+}
+public class Nurse extends Staff
+{
+    private String nurseId;
+    public String  getNurseId()
+    {
+        return nurseId;
+    }
+    public void setNurseId(String nurseId)
+    {
+        this.nurseId=nurseId;
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+7TH----->
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+public class HealthInsurancePlan {
+    // Code for 'coverage' field goes here
+    private double coverage;
+    
+    
+    // Don't worry about the below code and also the InsuranceBrand class
+	private InsuranceBrand offeredBy;
+	public double getCoverage()
+	{
+	    return coverage;
+	}
+	public void setCoverage(double coverage)
+	{
+	    this.coverage=coverage;
+	}
+
+	public InsuranceBrand getOfferedBy() {
+		return offeredBy;
+	}
+
+	public void setOfferedBy(InsuranceBrand offeredBy) {
+		this.offeredBy = offeredBy;
+	}
+}
+public class Billing {
+   
+    public static double[] computePaymentAmount(Patient patient, double amount) {
+        double[] payments = new double[2];
+        
+        HealthInsurancePlan patientInsurancePlan = patient.getInsurancePlan();
+        double amountPaylable=0;
+        if(patientInsurancePlan instanceof PlatinumPlan)
+        {
+            amountPaylable=amount-amount*0.9;
+            payments[0]=amount-amountPaylable;
+            payments[1]=amountPaylable-50;
+        }
+        else if(patientInsurancePlan instanceof GoldPlan)
+        {
+            amountPaylable=amount-amount*0.8;
+            payments[0]=amount-amountPaylable;
+            payments[1]=amountPaylable-40;
+        }
+        else if(patientInsurancePlan instanceof SilverPlan)
+        {
+            amountPaylable=amount-amount*0.7;
+            payments[0]=amount-amountPaylable;
+            payments[1]=amountPaylable-30;
+        }
+        else if(patientInsurancePlan instanceof BronzePlan)
+        {
+            amountPaylable=amount-amount*0.6;
+            payments[0]=amount-amountPaylable;
+            payments[1]=amountPaylable-25;
+        }
+        else
+        {
+             amountPaylable=amount-20;
+            payments[0]=amount-amountPaylable;
+            payments[1]=amountPaylable;
+        }
+        
+        
+
+        return payments;
+    }
+
+}
+public class User {
+    
+	private long id;
+	// add rest of the variables
+	private String firstName;
+	private String lastName;
+	private String gender;
+	private String email;
+	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getFirstName()
+	{
+	    return firstName;
+	}
+	public void setFirstName(String firstName)
+	{
+	    this.firstName=firstName;
+	}
+	public String getLastName()
+	{
+	    return lastName;
+	}
+	public void setLastName(String lastName)
+	{
+	    this.lastName=lastName;
+	}
+	public String getGender()
+	{
+	    return gender;
+	}
+	public void setGender(String gender)
+	{
+	    this.gender=gender;
+	}
+	public String getEmail()
+	{
+	    return email;
+	}
+	public void setEmail(String email)
+	{
+	    this.email=email;
+	}
+	
+	// add rest of the getters & setters
+	
+}
+public class Patient extends User {
+   // code from previous exercise
+   private long patientId;
+    private boolean insured;
+    private HealthInsurancePlan insurancePlan;
+    public long getPatientId()
+    {
+        return patientId;
+        
+    }
+    public void setPatientId(long patientId)
+    {
+        this.patientId=patientId;
+    }
+    public boolean getInsured()
+    {
+        return insured;
+    }
+    public void setInsured(boolean insured)
+    {
+        this.insured=insured;
+    }
+   
+   public HealthInsurancePlan getInsurancePlan()
+   {
+       return insurancePlan;
+   }
+   public void setInsurancePlan(HealthInsurancePlan insurancePlan)
+   {
+       this.insurancePlan=insurancePlan;
+   }
+}
+public class PlatinumPlan extends HealthInsurancePlan
+{
+   //PlatinumPlan pp=new PlatinumPlan();
+   // pp.setCoverage(0.9);
+    
+}
+public class GoldPlan extends HealthInsurancePlan
+{
+    //GoldPlan gp=new GoldPlan();
+   // gp.setCoverage(0.8);
+}
+public class SilverPlan extends HealthInsurancePlan
+{
+     //SilverPlan sp=new SilverPlan();
+    // sp.setCoverage(0.7);
+     
+}
+public class BronzePlan extends HealthInsurancePlan
+{
+         //SilverPlan sp=new SilverPlan();
+       //  sp.setCoverage(0.6);
+}
+// You can ignore this class. It just represents an Insurance Company
+public class InsuranceBrand {
+	private long id;
+	private String name;
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+8th ----->
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public class User {
+    private long id;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String email;
+    private boolean insured;
+    private HealthInsurancePlan insurancePlan;
+
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public boolean isInsured() {
+        return insured;
+    }
+    public void setInsured(boolean insured) {
+        this.insured = insured;
+    }
+    public HealthInsurancePlan getInsurancePlan() {
+        return insurancePlan;
+    }
+    public void setInsurancePlan(HealthInsurancePlan insurancePlan) {
+        this.insurancePlan = insurancePlan;
+    }   
+}
+
+
+public class Patient extends User {
+    private long patientId;
+
+    public long getPatientId() {
+        return patientId;
+    }
+    public void setPatientId(long patientId) {
+        this.patientId = patientId;
+    }
+
+}
+
+
+public abstract class HealthInsurancePlan {
+    private InsuranceBrand offeredBy;
+    private double coverage;
+
+    public InsuranceBrand getOfferedBy() {
+        return offeredBy;
+    }
+    public void setOfferedBy(InsuranceBrand offeredBy) {
+        this.offeredBy = offeredBy;
+    }   
+
+    public double getCoverage() {
+        return coverage;
+    }
+    public void setCoverage(double coverage) {
+        this.coverage = coverage;
+    }
+
+    public abstract double computeMonthlyPremium(double salary);
+}
+
+
+public class PlatinumPlan extends HealthInsurancePlan {
+
+    public PlatinumPlan () {
+        setCoverage(0.9);
+    }
+
+    public double computeMonthlyPremium(double salary) {
+        return 0.08 * salary;
+    }
+}
+
+
+public class GoldPlan extends HealthInsurancePlan {
+
+    public GoldPlan () {
+        setCoverage(0.9);
+    }
+
+    public double computeMonthlyPremium(double salary) {
+        return 0.07 * salary;
+    }
+}
+
+
+public class SilverPlan extends HealthInsurancePlan {
+
+    public SilverPlan () {
+        setCoverage(0.9);
+    }
+
+    public double computeMonthlyPremium(double salary) {
+        return 0.06 * salary;
+    }
+}
+
+
+public class BronzePlan extends HealthInsurancePlan {
+
+    public BronzePlan () {
+        setCoverage(0.9);
+    }
+
+    public double computeMonthlyPremium(double salary) {
+        return 0.05 * salary;
+    }
+}
+
+
+public class InsuranceBrand {
+    private long id;
+    private String name;
+
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+9th Exe ------>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public interface InsuranceBrand
+{
+public double computeMonthlyPremium(HealthInsurancePlan insurancePlan,int age,boolean smoking);
+}
+
+public class BlueCrossBlueShield implements InsuranceBrand
+{
+private long id;
+private String name;
+ 
+public long getId() {
+return id;
+}
+public void setId(long id) {
+this.id = id;
+}
+public String getName() {
+return name;
+}
+public void setName(String name) {
+this.name = name;
+}
+public double computeMonthlyPremium(HealthInsurancePlan insurancePlan ,int age ,boolean smoking)
+{
+double premium=0;
+if( insurancePlan instanceof PlatinumPlan)
+{
+if(age>55)
+premium=(double) premium+200;
+if(smoking==true)
+premium=(double) premium+100;
+ 
+
+}
+ 
+else if(insurancePlan instanceof GoldPlan)
+{
+if(age>55)
+premium+=150;
+if(smoking==true)
+premium+=90;
+}
+else if(insurancePlan instanceof SilverPlan)
+{
+if(age>55)
+premium+=100;
+if(smoking==true)
+premium+=80;
+}
+else if(insurancePlan instanceof BronzePlan)
+{
+if(age>55 && smoking==true)
+premium+=120;
+else if(age<55 && smoking==true)
+premium+=70;
+else
+premium+=50;
+ 
+}
+return premium;
+ 
+}
+}
+
+public abstract class HealthInsurancePlan {
+// Code for 'coverage' field goes here
+private double coverage;
+ 
+
+// Don't worry about the below code and also the InsuranceBrand class
+//abstract method
+public abstract double computeMonthlyPremium(double salary,int age,boolean smoking);
+ 
+private InsuranceBrand offeredBy;
+public double getCoverage()
+{
+return coverage;
+}
+public void setCoverage(double coverage)
+{
+this.coverage=coverage;
+}
+ 
+ 
+public InsuranceBrand getOfferedBy() {
+return offeredBy;
+}
+ 
+ 
+public void setOfferedBy(InsuranceBrand offeredBy) {
+this.offeredBy = offeredBy;
+}
+}
+
+class PlatinumPlan extends HealthInsurancePlan
+{
+public double computeMonthlyPremium(double salary,int age,boolean smoking)
+{
+// System.out.println(0.08*salary+getOfferedBy().computeMonthlyPremium(this,age,smoking));
+return 0.08*salary+getOfferedBy().computeMonthlyPremium(this,age,smoking);
+}
+ 
+}
+
+
+class GoldPlan extends HealthInsurancePlan
+{
+public double computeMonthlyPremium(double salary,int age,boolean smoking)
+{
+return 0.07*salary+getOfferedBy().computeMonthlyPremium(this,age,smoking);
+}
+ 
+}
+
+
+class SilverPlan extends HealthInsurancePlan
+{
+public double computeMonthlyPremium(double salary,int age,boolean smoking)
+{
+return 0.06*salary+getOfferedBy().computeMonthlyPremium(this,age,smoking);
+}
+ 
+}
+
+
+class BronzePlan extends HealthInsurancePlan
+{
+public double computeMonthlyPremium(double salary,int age,boolean smoking)
+{
+//System.out.println(0.06*salary+getOfferedBy().computeMonthlyPremium(this,age,smoking));
+return 0.05*salary+getOfferedBy().computeMonthlyPremium(this,age,smoking);
+}
+ 
+}
+
+
+public class User {
+ 
+private long id;
+private boolean insured;
+private HealthInsurancePlan insurancePlan;
+private String firstName;
+private String lastName;
+private String gender;
+private String email;
+private int age;
+private boolean smoking;
+ 
+
+public long getId() {
+return id;
+}
+public void setId(long id) {
+this.id = id;
+}
+public boolean getInsured()
+{
+return insured;
+}
+public void setInsured(boolean insured)
+{
+this.insured=insured;
+}
+public String getFirstName()
+{
+return firstName;
+}
+public void setFirstName(String firstName)
+{
+this.firstName=firstName;
+}
+public String getLastName()
+{
+return lastName;
+}
+public void setLastName(String lastName)
+{
+this.lastName=lastName;
+}
+public String getGender()
+{
+return gender;
+}
+public void setGender(String gender)
+{
+this.gender=gender;
+}
+public String getEmail()
+{
+return email;
+}
+public void setEmail(String email)
+{
+this.email=email;
+}
+ 
+
+public HealthInsurancePlan getInsurancePlan()
+{
+return insurancePlan;
+}
+public void setInsurancePlan(HealthInsurancePlan insurancePlan)
+{
+this.insurancePlan=insurancePlan;
+}
+public int getAge()
+{
+return age;
+}
+public void setAge(int age)
+{
+this.age=age;
+}
+public boolean getSmoking()
+{
+return smoking;
+}
+public void isSmoking(boolean smoking)
+{
+this.smoking=smoking;
+}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+10th Exe
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public class SimpleUnitTester {
+ 
+public int execute(Class clazz) throws Exception {
+int failedCount = 0;
+int count=0;
+Object ob = clazz.newInstance();
+java.lang.reflect.Method[] methods = ((Class) ob).getMethods();
+for (java.lang.reflect.Method method : methods) {
+ 
+String MethodName = method.getName();
+if(MethodName.startsWith("test") )
+{
+count+=1;
+}
+else
+{
+failedCount+=1;
+}
+}
+// your code
+ 
+return failedCount;
+}
+ 
+}
+
+
+public class Reflection {
+   public void go() {
+   }
+   public boolean testA() {
+       return true;
+   }  
+   public void foo() {      
+   }
+   public void bar() {      
+   }
+   public int testB() {
+       return 0;
+   }
+   public boolean testC() {
+       return false;
+   }
+   public boolean testD() {
+       return false;
+   }
+   public boolean testE() {
+       return true;
+   }
+   public boolean anotherTest() {
+       return false;
+   }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+12th exe
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+import java.util.ArrayDeque;
+import java.util.ArrayList; 
+import java.util.Deque; 
+import java.util.Iterator; 
+import java.util.List;
+ 
+public class TicketReservation {
+ 
+    private static final int CONFIRMEDLIST_LIMIT = 10;
+    private static final int WAITINGLIST_LIMIT = 3;
+ 
+    private List<Passenger> confirmedList = new ArrayList<>();
+    private Deque<Passenger> waitingList = new ArrayDeque<>();
+ 
+    // This getter is used only by the junit test case. 
+    public List<Passenger> getConfirmedList() {
+        return confirmedList;     
+    }
+ 
+    /**      
+     * Returns true if passenger could be added into either confirmedList or      
+     * waitingList. Passenger will be added to waitingList only if confirmedList      
+     * is full.      
+     *      
+     * Return false if both passengerList & waitingList are full      
+     */     
+     public boolean bookFlight(String firstName, String lastName, int age, String gender, String travelClass,             String confirmationNumber) {       Passenger passenger=new Passenger(firstName,lastName,age,gender,travelClass, confirmationNumber);
+     if(confirmedList.size()>=CONFIRMEDLIST_LIMIT){
+         if(waitingList.size()>=WAITINGLIST_LIMIT){
+             return false;
+         }
+         else{
+             waitingList.add(passenger);
+         }
+     }
+     else{
+         confirmedList.add(passenger);
+     }
+     return true;
+ 
+    }
+ 
+    /**      
+     * Removes passenger with the given confirmationNumber. Passenger could be      
+     * in either confirmedList or waitingList. The implementation to remove the      
+     * passenger should go in removePassenger() method and removePassenger method      
+     * will be tested separately by the uploaded test scripts.      
+
+     * If passenger is in confirmedList, then after removing that passenger, the      
+     * passenger at the front of waitingList (if not empty) must be moved into      
+     * passengerList. Use poll() method (not remove()) to extract the passenger      
+     * from waitingList.      
+     */     
+    public boolean cancel(String confirmationNumber) {
+boolean found=false;
+if(removePassenger(confirmedList.iterator(),confirmationNumber)){
+    found=true;
+    confirmedList.add(waitingList.poll());
+}
+else if(removePassenger(waitingList.iterator(),confirmationNumber)){
+    found=true;
+}
+return found;
+    }
+ 
+    /**      
+     * Removes passenger with the given confirmation number.      
+     * Returns true only if passenger was present and removed. Otherwise, return false.      
+     */     
+    public boolean removePassenger(Iterator<Passenger> iterator, String confirmationNumber) {         
+        boolean found=false;
+        while(iterator.hasNext()){
+            if(iterator.next().getConfirmationNumber().equals(confirmationNumber)){
+                found=true;
+                iterator.remove();
+            }
+        }
+        return found;
+    }
+ 
+}
+
+
+public class Passenger {
+    private String firstName;
+    private String lastName;
+    private int age;
+    private String gender;
+    private String travelClass;
+    private String confirmationNumber;
+
+    public Passenger(String firstName, String lastName, int age, String gender, String travelClass,
+            String confirmationNumber) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.travelClass = travelClass;
+        this.confirmationNumber = confirmationNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public int getAge() {
+        return age;
+    }
+    public String getGender() {
+        return gender;
+    }    
+    public String getTravelClass() {
+        return travelClass;
+    }
+    public String getConfirmationNumber() {
+        return confirmationNumber;
+    }
+ 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((confirmationNumber == null) ? 0 : confirmationNumber.hashCode());
+        return result;
+    }
+ 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Passenger other = (Passenger) obj;
+        if (confirmationNumber == null) {
+            if (other.confirmationNumber != null)
+                return false;
+        } else if (!confirmationNumber.equals(other.confirmationNumber))
+            return false;
+        return true;
+    }    
+
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+				You will get the course certificate once these exercises are completed.
+							No need to complete the rest.
+----------------------------------------------------------------------------------------------------------------------------------------------------------
