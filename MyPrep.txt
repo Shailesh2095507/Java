@@ -1,0 +1,51 @@
+OOP - Object Oriented Programming
+
+OOP is bascially a programming paradigm that is based on the concept of "objects" which contains data in the form of feilds(attributes), 
+code and procedures(methods). Java is basically a programming language that incorporates OOP principle.
+
+Some of the main concepts of OOP implemented in Java.
+1) Classes and Objects 
+	Class - Basically a blue print of an object. It defines attributes(datatypes) and behaviour(methods) that can be performed on that objects.
+	Object - Object is an instace of a class.
+
+	Example - Class (Blueprint): Think of a class as a blueprint for a house. 
+		  	The blueprint defines the structure, layout, and features that all houses of that type will have. 
+		  	It specifies the number of rooms, the type of roof, the presence of a garage, etc.
+
+	  	  Object (Instance): An object, in this analogy, is an actual house built based on the blueprint. 
+		  	Each house is a specific instance of the blueprint, and it has its own unique characteristics. 
+		  	For example, one house may have blue walls, three bedrooms, and a tiled roof, 
+		  	while another may have red walls, four bedrooms, and a thatched roof.
+
+2) Encapsulation 
+	Basically, it is bundling the data members and member functions that operate on a data into a single unit, know as a class.
+	WHY - It restricts access to some of the object's components, which means that the internal details of an object are hidden from the outside world.
+	      It can prevent the accidental modification of data.
+	      Access and modify attributes using methods.
+	      Can also encapsulate the method impl as well.
+
+3) Inheritance 
+	Inheritance is a mechanism that allows a class (subclass or derived class) 
+	to inherit properties and behaviors from another class (superclass or base class).
+	WHY - It promotes code reusability and establishes a relationship between classes.
+
+4) Polymorphism
+	Poly means many, polymorphism is many forms. Bascially, here, refering to object, polymorphism allows objects of differnt types, 
+	to be treated as a objects of a common types.
+	There are 2 types of polymorphism
+	1) Compile Time Polymorphism - Method Overloading
+	2) Run Time Polymorphism - Method Overriding
+
+	1) Complie Time Polymorphism (Method Overloading)
+		Method overloading occurs when two or more methods in the same class have the same name but different parameters (number, type, or order).
+		The compiler determines which method to invoke based on the method signature during compile-time.
+	
+	2) Run Time Polymorphism (Method Overriding)
+		Method overriding occurs when a subclass provides a specific implementation for a method that is already defined in its superclass.
+		The decision on which method to call is made at runtime based on the actual type of the object. 
+
+	WHY - Allows for more flexibility in designing and extending classes.
+
+5) Abstraction
+	It involves simplfying the complex systems by modeling classes based on the essential properties and behaviour they share.
+	
