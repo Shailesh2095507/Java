@@ -1,0 +1,118 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+What is oops concept? 
+What is java ?
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+OOP - Object Oriented Programming 
+
+OOP is bascially a programming paradigm that is based on the concept of "objects" which contains data in the form of feilds(attributes), 
+code and procedures(methods). Java is basically a programming language that incorporates OOP principle.
+
+Some of the main concepts of OOP implemented in Java.
+1) Classes and Objects 
+	Class - Basically a blue print of an object. It defines attributes(datatypes) and behaviour(methods) that can be performed on that objects.
+	Object - Object is an instace of a class.
+
+	Example - Class (Blueprint): Think of a class as a blueprint for a house. 
+		  	The blueprint defines the structure, layout, and features that all houses of that type will have. 
+		  	It specifies the number of rooms, the type of roof, the presence of a garage, etc.
+
+	  	  Object (Instance): An object, in this analogy, is an actual house built based on the blueprint. 
+		  	Each house is a specific instance of the blueprint, and it has its own unique characteristics. 
+		  	For example, one house may have blue walls, three bedrooms, and a tiled roof, 
+		  	while another may have red walls, four bedrooms, and a thatched roof.
+
+2) Encapsulation 
+	Basically, it is bundling the data members and member functions that operate on a data into a single unit, know as a class.
+	WHY - It restricts access to some of the object's components, which means that the internal details of an object are hidden from the outside world.
+	      It can prevent the accidental modification of data.
+	      Access and modify attributes using methods.
+	      Can also encapsulate the method impl as well.
+
+3) Inheritance 
+	Inheritance is a mechanism that allows a class (subclass or derived class) 
+	to inherit properties and behaviors from another class (superclass or base class).
+	WHY - It promotes code reusability and establishes a relationship between classes.
+
+4) Polymorphism
+	Poly means many, polymorphism is many forms. Bascially, here, refering to object, polymorphism allows objects of differnt types, 
+	to be treated as a objects of a common types.
+	There are 2 types of polymorphism
+	1) Compile Time Polymorphism - Method Overloading
+	2) Run Time Polymorphism - Method Overriding
+
+	1) Complie Time Polymorphism (Method Overloading)
+		Method overloading occurs when two or more methods in the same class have the same name but different parameters (number, type, or order).
+		The compiler determines which method to invoke based on the method signature during compile-time.
+	
+	2) Run Time Polymorphism (Method Overriding)
+		Method overriding occurs when a subclass provides a specific implementation for a method that is already defined in its superclass.
+		The decision on which method to call is made at runtime based on the actual type of the object. 
+
+	WHY - Allows for more flexibility in designing and extending classes.
+
+5) Abstraction
+	It involves simplfying the complex systems by modeling classes based on the essential properties and behaviour they share.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+What is the difference b/w java and C++ ?
+How Java is different from other programming languages ?
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Comparison Index 		|	C++						|	Java
+
+Platform Dependency		  Platform Dependent					  Platform Independent
+
+Mainly used for 		  C++ is mainly used for system programming.		  It is mainly used for application programming. It is widely used 											  for web-based application , enterprise and mobile application.
+ 		
+Multiple Inheritance 		  C++ supports multiple inheritance			  Doesn't support multiple inheritance through class bbut it is 											  achieved using a concept called interface.
+
+Compiler and Interpreter	  C++ uses compiler only where the compiler convets the   Java uses both compiler and interpreter. Java source code is 
+				  source code into machine code hence , it is platform    converted to bytecode using a compiler and that byte code is 
+				  dependent.						  passed to the interpreter(JVM) and is converted to the machine 											  code. Hence, it is platform independent.
+
+Call by value - Call by ref	  supports both						  Supports call by value only, dosen't support call by reference.
+
+Inheritance tree		  C++ creates a new inheritance tree always.		  Java uses single inheritance tree always as all the classes(sub-											  classes) are interited with the super-class i.e., "Object.class" 
+
+Hardware interaction		  It was made for hardware/system ineteraction		  Not so interactive with hardware.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Difference between JDK, JRE, JVM, IDE
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+JDK -  Java Development Kit
+
+It provides a comprehensive set of tools for Java development. These tools are essential for tasks such as compiling, running, debugging, and monitoring Java programs. 
+
+where JDK contains -> javac + JVM + comprehensive set of tools for Java development
+
+javac :-
+
+1) javac is a java compiler that comes as a part of JDK which is available for multiple platforms. Like - Windows, Linux, MacOS
+2) javac converts the source code(.java file) to bytecode(.class file) which can be run into any JVM (bytecode is platform-independent).
+3) javac is bascially "platform-independent".
+4) javac compiler is platform-independent, the platform dependence comes into play when the generated bytecode is executed by the JVM where jvm is 
+   platform dependent. This separation of the compilation and execution stages is a key factor in achieving Java's "Write Once, Run Anywhere" principle.
+
+
+JVM :-
+1) 
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+How Java is platform Independent ?
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Java achieves platfrom independence through a combinatonal langauge features and mainly due to JVM(Java Virtual Machine)
+
+1) The source code is compiled by Java compiler.
+2) Upon compilatiion, the source code is converted into a intermediate form called ByteCode.
+3) The ByteCode is taken to interpreter i.e., JVM and the JVM takes this ByteCode, runs it and gives us the result.
+4) Here the independence is achieved from JVM as it can take the byte code compiled wrt to any device.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ 
