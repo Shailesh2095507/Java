@@ -95,7 +95,7 @@ javac :-
 
 
 JVM :-
-1) JVM is an interpreter(Virtual CPU) and it is expanded as Java Virtual Michine
+1) JVM is an interpreter(Virtual CPU) and it is expanded as Java Virtual Machine
 
 
 
