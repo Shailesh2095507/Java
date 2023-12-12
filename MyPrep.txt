@@ -112,6 +112,7 @@ JDK = JRE(JVM + libraries + other files required to run the code) + development 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 How Java is platform Independent ?
+What gives Java its 'write once and run anywhere' nature?
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 Java achieves platfrom independence through a combinatonal langauge features and mainly due to JVM(Java Virtual Machine)
 
