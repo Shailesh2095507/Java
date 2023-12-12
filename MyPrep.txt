@@ -57,7 +57,6 @@ Some of the main concepts of OOP implemented in Java.
 What is the difference b/w java and C++ ?
 How Java is different from other programming languages ?
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Comparison Index 		|	C++						|	Java
 
 Platform Dependency		  Platform Dependent					  Platform Independent
@@ -101,10 +100,19 @@ JVM :-
    again , it converts that code to a native machine code. This inturn helps java program execute faster than usual improving performance.
 4) It also handles, memory allocation and Garbage Collection.
 
+Other Tools :-
+jdb - java debbuger - command-line debugger for Java programs. Ex - jdb MyProgram
+jstack - java stack trace - prints stack traces of Java threads for a given java process. Ex - jstack 1234
+jdeps - analyzes Java class files to indentify class dependencies.  Ex - jdeps MyProgram.class
+
+JRE - Java Runtime Environment
+The JRE is a runtime environment for executing Java applications. It includes the JVM, libraries(precompiled classes and methods that Java programs can use), and other components(necessary files and configurations for running Java applications) required for running Java programs. If you only want to run Java applications and not develop them, you need the JRE.
+
+JDK = JRE(JVM + libraries + other files required to run the code) + development tools
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 How Java is platform Independent ?
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Java achieves platfrom independence through a combinatonal langauge features and mainly due to JVM(Java Virtual Machine)
 
 1) The source code is compiled by Java compiler.
@@ -113,7 +121,22 @@ Java achieves platfrom independence through a combinatonal langauge features and
 4) Here the independence is achieved from JVM as it can take the byte code compiled wrt to any device.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+List out some of the features of Java Programming Langauge ?  
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+1) Simple and straight forward.
+2) Platfrom independent.
+3) Robust and Reliable - features like GC and execption handling.
+4) Secure and has built-in security fetaures to protect against potentail threats. It runs in a secure environment, and its design minimizes the risk of 
+   security vulnerabilities.
+5) Java is not as fast as some lower-level languages,but Java offers good performance due to its Just-In-Time (JIT) compilation (part of JVM).
+6) Concurrency - Java supports multi-threading, allowing programs to execute multiple tasks concurrently
+7) Distributed Computing - Java includes features for building distributed applications, enabling communication between different components over a network.
+   (Bascially, we call it as Microservices)
+8) Its a dynamic language.
+9) Java comes with a vast standard library that provides ready-to-use components for various tasks, reducing the need for developers to write everything 
+   from scratch.
+10) Java has a large and active community of developers. This means there are plenty of resources, forums, and libraries available to help and support 
+   developers.
 
-
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------
  
