@@ -1,0 +1,367 @@
+Collecion of microservices -> to 1 core microservices. (may or may not have core microservice/ core library)
+a project will always have a core library. - parent pom.xml (Core library) 
+
+how do they connect - REST Template (to connect to other microservercies)
+Sonar qube analysis - to check your code standards to check out the security breaches in Jenkins -> will give a report.
+
+The moment you go Jenkin (CICD pipeline tool - to deploy your code to the cloud server , say GCP, AWS etc) , you go to UAT.
+
+SIT - System Integration Testing.
+UAT - User Acceptance Testing Pre Production server.
+
+Say for UAT service  -  divivded by teams.
+1) go to your team.
+2) you will find list of Microservies.
+3) click on the 1 you need.
+4) click on build on right top corner.
+5) upon clicking, it aks for git details like version, and branch.
+6) then finally build it.
+7) build(build with parameters) + sonar qube analysis (gives you sonar report) - if sucesed without any error. 
+8) then deploy.
+9) then go to cloud.
+10) workload(ALL microservices together) - go to ypur sepefic deployed and check for the log , to know what's happening with the deployed code.
+
+11) if it fails somewhere in between after build, you will have to start again from first, the build phase is skipped as the build is already done (if you want to skip, then you can).
+12) You have to give the params like the git details again when you are staring fro first.
+
+
+Jenkin is divided into masters and slaves. 
+1) Master(pipeline - chances of failing code deplyment is minimal) will have multiple slaves. 
+2) BAscally, master will have the higher priority over slave if both are free.
+3) Slave pipeline can fail in between.   
+Monolithic application - deployed all together as 1 application.
+
+
+SIT 
+Assume that you have deployed the code - the load testing is done using JMeter(Tool used by testers - basically automation testing upto 100 ursers starting from 1 to 5 to 20 to 50 to 100). 
+shoot n number of request at a time to check if it is crashing.
+
+log hashing technique 
+card(payment platform) through -> payment gateway(will have auth) - we can also check which microservice has failed , say in production, it as crashed, if crashed, you can revert it back to previous version immediately -> core gateway(will have auth) -> core microservice(auth of user cred) -> transaction.  
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1) @Qualifier vs @Primary - for 2 diff DB ?
+2) what happens if you have 2 configuration files ?
+3) what happens if you have 2 application.properties files ?
+4) Diff b/w REST architecture and Microservices Architecture ?
+5) Bean Scopes -  Singleton , Prototype -  more than 2 obj per bean difination, Session in bean scope - HTTP Session for a bean difination, Request Scope - HTTP req for a single bean   difination. 4 Global Singleton.
+6) TreeSet cannot store null, why?
+7) 2 interface, void display() method in both int ?
+8) Option<?> methods
+9) Concurrent Hashmap - Java 8
+10) Flat-map - Java 8
+11) Serialization, Deserialization and Transient keyword ?
+12) ArrayList vs LinkedList vs Vector - synchronised - which gives better performance ?
+ 
+*** Check ***
+no fun int can extend other interface.
+int a
+{
+	void method();
+} 
+
+int b extends a 
+{
+	void method();
+} 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+RESTful services
+
+Resources:
+Imagine you have different things you want to interact with, like articles on a website, users in a system, or products in a store. Each of these things is a "resource."
+Each resource should have its own unique identifier, like a web address (URL). For example, a user might have the URL http://example.com/users/123.
+
+Representations:
+Resources can be represented in different ways, such as JSON, XML, or HTML. Think of these representations as different views or formats of the same thing.
+For example, the same user resource can be represented as JSON like {"id": 123, "name": "John"} or as XML like <user><id>123</id><name>John</name></user>.
+
+Stateless Communication:
+When you want to do something with a resource, like retrieve, update, or delete it, you send a message (request) to a server.
+Each message must contain all the information needed for the server to understand and process it. The server doesn't remember anything about previous requests from the same client.
+This helps keep things simple and reliable, especially when dealing with many clients at once.
+
+Uniform Interface:
+To interact with resources, you use standard methods like GET, POST, PUT, and DELETE. These methods correspond to common actions like getting, creating, updating, and deleting resources.
+For example, you might use a GET request to retrieve information about a user, or a POST request to create a new user.
+
+Client-Server Architecture:
+RESTful systems have two main parts: clients and servers. Clients are the devices or applications that want to interact with resources, and servers are the ones that hold and manage those resources.
+
+They communicate over the internet using HTTP, the same protocol that powers the web.
+So, in simple terms, REST is a way of designing systems where you can interact with different things (resources) over the internet using standard methods and formats. It's like a set of rules for how computers should talk to each other, making it easier to build and use web services.
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Stateless Application: Real-Time Weather Updates
+
+Imagine a weather application where users can view real-time weather updates for different locations.
+In a stateless scenario:
+Users send requests to the server to get weather updates for specific locations.
+The server processes each request independently and retrieves the latest weather information for the requested location.
+The server sends back the weather data to the user as a response.
+Each request for weather updates is self-contained and doesn't rely on any previous interactions with the server.
+Example: A RESTful API for fetching weather data. Users send requests with location parameters, and the server responds with the latest weather information for the requested location.
+Stateful Application: Real-Time Chat Application
+
+Consider a real-time chat application where users can send messages to each other in real-time.
+In a stateful scenario:
+Users log in to the chat application, and the server maintains session information for each user, including their username, login status, and message history.
+When a user sends a message, the server knows who the sender is and associates the message with their account. The message is also stored in the user's message history.
+The server broadcasts the message to all other users in the chat room in real-time.
+Users can see their message history and continue conversations seamlessly even after logging out and logging back in.
+Example: A chat application with user authentication and message history. Users log in to the application, send messages to each other, and see real-time updates of messages from other users. The server maintains session state for each user and manages message delivery in real-time.
+These examples illustrate the differences between stateless and stateful applications and how they are applied in real-world scenarios to achieve different functionalities and user experiences.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SESSION
+
+
+Think of a session like a conversation between two people. When you start talking with someone, you begin a conversation, and as you talk, you share information and exchange ideas. A session in computing is similar, but it happens between a user (like you) and a computer system (like a website).
+
+Here's how it works:
+
+Start of Session:
+When you visit a website, your web browser starts a session with the website's server. This happens as soon as you open the website in your browser.
+Just like when you start talking to someone, the session begins, and you can start interacting with the website.
+
+Session Data:
+During the session, you might do things like log in, browse different pages, fill out forms, or add items to a shopping cart.
+As you do these things, the website's server keeps track of information about your session, like your login status, the pages you visit, or the items you've added to your cart.
+This information is stored temporarily on the server and associated with your session, so the website can remember who you are and what you're doing as you move from page to page.
+
+End of Session:
+When you're done using the website and close your browser or log out, the session ends.
+Just like when you finish talking to someone, the conversation (session) comes to an end, and the website's server no longer keeps track of information about your session.
+Any temporary data associated with your session is typically cleared out, and the server is ready to start a new session with the next visitor.
+So, in simple terms, a session is like a conversation or interaction between you and a website. It starts when you visit the website, continues as you interact with it, and ends when you're done. During the session, the website's server keeps track of information about your interactions so it can provide you with a personalized and seamless experience.
+
+
+Then, how does it keeps  a track again if we login? as in the previous info and stuff ?
+
+
+When you log in to a website, the website's server typically uses a technique called session management to keep track of your session and remember information about you as you navigate the site. Here's how it works:
+
+Session Identification:
+When you log in to the website, the server assigns a unique identifier called a session ID to your session.
+This session ID is typically stored as a small piece of data, such as a cookie, in your web browser.
+The session ID serves as a way for the server to recognize and identify your session as you move from page to page on the website.
+
+Session Data Storage:
+As you interact with the website, the server stores information about your session, such as your login status, preferences, shopping cart contents, and any other relevant data.
+This session data is associated with your session ID and is typically stored temporarily on the server's memory or a database.
+
+Session Retrieval:
+Each time you make a request to the website's server, such as loading a page or submitting a form, your web browser sends the session ID along with the request.
+The server receives the session ID and uses it to retrieve the corresponding session data from its storage.
+By matching the session ID with the stored session data, the server can identify you and provide you with a personalized experience based on your previous interactions.
+
+Session Expiry:
+Sessions typically have a limited lifespan, and they may expire after a certain period of inactivity or when you log out.
+When a session expires, the session data associated with it is usually cleared out, and you may need to log in again to start a new session.
+
+In summary, session management allows websites to keep track of user sessions and remember information about users as they navigate the site. By using session IDs and storing session data, websites can provide personalized experiences and maintain continuity between user interactions.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Microservices vs Rest Architecture
+
+
+
+Sure, let's simplify it:
+
+Microservices Architecture:
+Imagine you're building a big LEGO structure. Instead of making one giant piece, you break it into smaller, manageable blocks (services). Each block has its own unique function, like a door, a window, or a roof.
+These smaller blocks (services) can be built, updated, and replaced independently without affecting the whole structure. So, if you want to change the door, you don't have to rebuild the entire LEGO house.
+Microservices architecture is like building a complex application by combining these smaller, independent blocks (services) that communicate with each other to accomplish tasks.
+
+REST Architecture:
+Think of a RESTful API like a restaurant menu. The menu lists different dishes (resources) along with how you can interact with them (HTTP methods like GET, POST, PUT, DELETE).
+When you want to order something from the menu, you use the appropriate method (e.g., telling the waiter you want to "GET" the burger). The waiter brings you the burger (resource) based on your request.
+REST architecture is like designing a menu for your application, where resources are listed with clear instructions on how clients can interact with them using standard HTTP methods.
+
+In simple terms, microservices architecture is about breaking down a big application into smaller, independent pieces, while REST architecture is about designing a clear and structured way for these pieces to communicate with each other. They often go hand in hand, but they focus on different aspects of building and designing software systems.
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@SpringBootApplication
+
+
+@Bean Annotation: 
+It is used to declare custom bean definitions in Spring. When you want to have fine-grained control over the creation and configuration of beans, you can use the @Bean annotation within a class annotated with @Configuration. This allows you to define custom beans and their dependencies programmatically.
+
+@Configuration Annotation: 
+It is used to indicate that a class contains bean definitions. When you mark a class with @Configuration, Spring treats it as a source of bean definitions. It tells Spring to look for @Bean methods within the class and use them to create beans. You typically use @Configuration in conjunction with @Bean when you need to define custom beans or configure specific dependencies.
+
+@EnableAutoConfiguration Annotation: 
+It is used to enable Spring Boot's auto-configuration feature. Spring Boot automatically configures beans based on the classpath and environment, reducing the need for explicit configuration. @EnableAutoConfiguration is often used in Spring Boot applications to bootstrap the application and automatically configure common components based on the dependencies detected on the classpath.
+
+@ComponentScan Annotation: 
+It is used to specify the base package(s) to scan for Spring components, such as @Component, @Service, @Repository, and @Controller. When you mark a class with @ComponentScan, Spring will search for components within the specified package(s) and register them as beans in the application context.
+
+In summary, you're correct that @Bean and @Configuration are used for custom bean creation and fine-grained configuration when needed. However, Spring Boot's @EnableAutoConfiguration simplifies the configuration process by automatically configuring beans based on conventions and dependencies, reducing the need for manual configuration in many cases. You may still use @Bean and @Configuration for cases where custom configuration is required or when you want to override default configurations provided by Spring Boot.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+@Controller vs @RestController
+
+
+In a typical Spring MVC application, when you use @Controller without @ResponseBody, Spring assumes that the return value of your controller method represents the name of a view that should be rendered. Spring then forwards this view name to a view resolver, which resolves it to an actual view (typically a JSP file) that will be rendered and sent back to the client as the response.
+
+However, when you use @ResponseBody along with @Controller, Spring skips this view resolution process and treats the return value of your method as the actual content of the HTTP response body. This is useful when you want to return data directly to the client in a format such as JSON, XML, or plain text, without rendering it as HTML in a view.
+
+So, by using @ResponseBody, you're essentially telling Spring that the return value of your method should be sent directly back to the client as-is, without any further processing or rendering as a view. This is commonly used for building RESTful web services where the response is typically in a structured data format rather than HTML.
+
+@RestController = @Controller + @ResponseBody
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Vector vs ArrayList
+
+
+In Java's Collection framework, Vector is a legacy class that was part of the original Java Collections API. It's similar to ArrayList but has some differences:
+
+Synchronization:
+One of the main differences between Vector and ArrayList is that Vector is synchronized, whereas ArrayList is not. This means that access to a Vector instance is thread-safe, making it suitable for use in multi-threaded environments where multiple threads may access or modify the collection concurrently. On the other hand, ArrayList is not synchronized, so if you need thread-safe behavior, you would need to use explicit synchronization (e.g., using Collections.synchronizedList()).
+
+Performance:
+Due to the synchronization overhead, Vector operations may be slower than similar operations on an ArrayList. This is because synchronization introduces a performance cost, even when there is no contention between threads.
+
+Growth strategy:
+Both Vector and ArrayList internally use dynamic arrays to store elements, and they both resize themselves dynamically as needed. However, the growth strategy differs:
+Vector increases its capacity by a fixed percentage (typically doubling its size) when it needs to resize, using the grow() method.
+ArrayList increases its capacity by 50% of the current size when it needs to resize, using the grow() method.
+
+Legacy:
+Vector is part of the original Java Collections framework and has been available since JDK 1.0. However, it's considered a legacy class, and its use is generally discouraged in favor of ArrayList or other modern collections classes.
+
+In summary, while Vector and ArrayList are both dynamic array implementations in Java, Vector provides thread-safe access to its elements at the cost of potential performance overhead, while ArrayList sacrifices thread safety for potentially better performance. In most cases, you would prefer to use ArrayList unless you specifically require thread-safe behavior.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring Data JPA - Hibernate - JPARespository - CRUDRepository
+
+ohh okay, Spring Data JPA kicks in as soon as it see's JPARepository and give us an implementation as a magic and this implemnation is made use by hibernate to have a ORM ?
+correct me if am worong 
+ChatGPT
+You're almost correct! Let me clarify it a bit:
+
+Spring Data JPA: Provides repository interfaces (CrudRepository, PagingAndSortingRepository, JpaRepository, etc.) and automatically generates implementations for these interfaces at runtime.
+
+Hibernate: Acts as the JPA provider, handling the actual database interactions using the ORM (Object-Relational Mapping) principles.
+
+How It All Works Together
+Defining Repositories:
+
+You define repository interfaces by extending Spring Data JPA interfaces like JpaRepository.
+java
+Copy code
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    List<User> findByLastName(String lastName);
+}
+Spring Data JPA:
+
+When your Spring Boot application starts, Spring Data JPA scans for these repository interfaces.
+It automatically generates proxy classes that implement these interfaces. These proxy classes contain the logic for the CRUD operations and custom query methods you define.
+Hibernate:
+
+Spring Data JPA uses Hibernate as the JPA provider to execute the actual SQL queries.
+When you call methods on your repository, the generated implementation uses Hibernate to interact with the database.
+In Detail
+Repository Interface: You create an interface, like UserRepository, that extends JpaRepository.
+Spring Data JPA: At runtime, Spring Data JPA generates a class that implements UserRepository. This class contains implementations for the methods inherited from JpaRepository, as well as any custom methods you define.
+Hibernate: The generated implementation class uses Hibernate to perform database operations. For example, calling userRepository.save(user) will internally use Hibernate to persist the user entity.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+What's Spring Data JPA and How's it related to JPARepository, along with that, how's JPARepository is different from CRUDRepository. How are all these different from Hibernate
+
+
+Spring Data JPA
+Spring Data JPA is a part of the larger Spring Data family. Its main goal is to simplify data access and significantly reduce the amount of boilerplate code required to interact with databases. Spring Data JPA builds on top of the Java Persistence API (JPA) and provides a higher-level abstraction over JPA.
+
+JPARepository
+JpaRepository is an interface provided by Spring Data JPA that extends PagingAndSortingRepository which in turn extends CrudRepository. JpaRepository adds JPA-specific methods such as flushing the persistence context and deleting records in a batch.
+
+Here's a hierarchy overview:
+
+CrudRepository: Defines CRUD (Create, Read, Update, Delete) operations.
+PagingAndSortingRepository: Extends CrudRepository to provide additional methods for pagination and sorting.
+JpaRepository: Extends PagingAndSortingRepository to provide JPA-specific methods.
+Differences Between JpaRepository and CrudRepository
+CrudRepository: Provides basic CRUD operations.
+
+save(S entity)
+findById(ID id)
+findAll()
+deleteById(ID id)
+JpaRepository: Adds JPA-specific methods.
+
+flush()
+saveAndFlush(S entity)
+deleteInBatch(Iterable<T> entities)
+deleteAllInBatch()
+
+
+How They Relate to Each Other
+
+
+CrudRepository is the base interface for basic CRUD operations.
+PagingAndSortingRepository extends CrudRepository to add methods for pagination and sorting.
+JpaRepository extends PagingAndSortingRepository and adds methods specific to JPA.
+Hibernate
+Hibernate is an ORM (Object-Relational Mapping) framework for Java. It implements the JPA specification but also provides additional features and capabilities beyond the standard JPA. Hibernate handles the mapping from Java classes to database tables and from Java data types to SQL data types.
+
+How They Differ
+JPA (Java Persistence API):
+
+A specification for ORM in Java. It defines a set of interfaces that any ORM tool (like Hibernate) can implement.
+Standardized way to manage relational data in Java applications.
+Includes concepts like EntityManager, entities, JPQL (Java Persistence Query Language), etc.
+Hibernate:
+
+An implementation of the JPA specification.
+Provides additional features not defined in the JPA specification, such as criteria queries, caching, etc.
+Can be used standalone or as the JPA provider in a Spring application.
+Spring Data JPA:
+
+A Spring Data project that makes it easier to implement JPA-based repositories.
+Provides repository interfaces (CrudRepository, PagingAndSortingRepository, JpaRepository) to simplify data access.
+Reduces boilerplate code and allows defining query methods using method names or @Query annotations.
+Example of a JpaRepository
+java
+Copy code
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    // Custom query method
+    List<User> findByLastName(String lastName);
+}
+Summary
+Spring Data JPA leverages JPA and provides repository interfaces to simplify database interactions.
+JpaRepository extends CrudRepository and PagingAndSortingRepository with additional JPA-specific methods.
+CrudRepository provides basic CRUD operations, while JpaRepository adds more sophisticated features.
+Hibernate is an ORM framework and JPA implementation, often used with Spring Data JPA as the underlying provider.
+Using these tools together allows for powerful and flexible data access layers in Spring applications with minimal boilerplate code.
+
+
+
+
+
